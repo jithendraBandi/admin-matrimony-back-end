@@ -34,5 +34,9 @@ public class ProfileController {
     public ResponseEntity<Resource> getImageFile(@PathVariable("fileId") String fileId) {
         return profileService.getProfileImage(fileId);
     }
+    @DeleteMapping("/{id}/delete")
+    public void deleteProfile(@PathVariable("id") Long id) {
+        profileService.deleteProfile(id);
+    }
 
 }

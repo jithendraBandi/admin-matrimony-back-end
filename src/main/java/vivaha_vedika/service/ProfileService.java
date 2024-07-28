@@ -10,4 +10,5 @@ public interface ProfileService {
     void createProfile(Profile profile);
     List<Profile> getAllProfiles();
     ResponseEntity<Resource> getProfileImage(String fileId);
+    void deleteProfile(Long id);
 }

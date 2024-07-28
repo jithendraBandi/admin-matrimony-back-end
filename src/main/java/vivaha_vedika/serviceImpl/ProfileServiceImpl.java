@@ -48,15 +48,10 @@ public class ProfileServiceImpl implements ProfileService {
             }
         }
         return ResponseEntity.notFound().build();
-//        try {
-//            Path filePath = Paths.get(Constants.PROFILE_IMAGES_DIRECTORY).resolve(fileId+".png");
-//            Resource resource = new UrlResource(filePath.toUri());
-//            if (resource.exists() || resource.isReadable()) {
-//                return ResponseEntity.ok().body(resource);
-//            }
-//            return ResponseEntity.notFound().build();
-//        } catch (MalformedURLException e) {
-//            throw new RuntimeException(e);
-//        }
+    }
+
+    @Override
+    public void deleteProfile(Long id) {
+        profileRepository.deleteById(id);
     }
 }
