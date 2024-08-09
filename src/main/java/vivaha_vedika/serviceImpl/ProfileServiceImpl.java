@@ -10,10 +10,13 @@ import vivaha_vedika.entity.Profile;
 import vivaha_vedika.repository.ProfileRepository;
 import vivaha_vedika.service.ProfileService;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
@@ -52,6 +55,25 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void deleteProfile(Long id) {
+        Optional<Profile> optionalProfile = profileRepository.findById(id);
+        if (optionalProfile.isEmpty()) {
+            throw new RuntimeException("Profile Not Found");
+        }
         profileRepository.deleteById(id);
+        List<String> imageExtensionsList = Constants.IMAEGE_EXTENSIONS_LIST;
+        Path imageDirectory = Paths.get(Constants.PROFILE_IMAGES_DIRECTORY);
+
+        for (String extension : imageExtensionsList) {
+            Path filePath = imageDirectory.resolve(optionalProfile.get().getCodeNo() + "." + extension);
+            try {
+//                Resource resource = new UrlResource(filePath.toUri());
+                if (Files.exists(filePath)) {
+                    Files.delete(filePath);
+                    break;
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

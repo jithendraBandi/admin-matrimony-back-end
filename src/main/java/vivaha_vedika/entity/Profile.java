@@ -40,6 +40,9 @@ public class Profile {
     @Column(name="JOB")
     private String job;
 
+    @Column(name="CASTE")
+    private String caste;
+
     @Column(name="JOB_ADDRESS")
     private String jobAddress;
 
