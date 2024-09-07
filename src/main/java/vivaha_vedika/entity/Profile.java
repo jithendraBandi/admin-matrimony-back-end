@@ -55,6 +55,12 @@ public class Profile {
     @Column(name="MOBILE_NUMBER")
     private String mobileNumber;
 
+    @Column(name="ALTERNATE_MOBILE_NUMBER")
+    private String alternateMobileNumber;
+
+    @Column(name="HEIGHT")
+    private String height;
+
     @Column(name="IMAGE_URL")
     private String imageUrl;
 
