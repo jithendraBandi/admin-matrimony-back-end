@@ -1,14 +1,14 @@
-package vivaha_vedika.serviceImpl;
+package projects.vivaha_vedika.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import vivaha_vedika.constants.Constants;
-import vivaha_vedika.entity.Profile;
-import vivaha_vedika.repository.ProfileRepository;
-import vivaha_vedika.service.ProfileService;
+import projects.vivaha_vedika.constants.Constants;
+import projects.vivaha_vedika.entity.Profile;
+import projects.vivaha_vedika.repository.ProfileRepository;
+import projects.vivaha_vedika.service.ProfileService;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

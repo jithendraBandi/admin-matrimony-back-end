@@ -1,4 +1,4 @@
-package vivaha_vedika.entity;
+package projects.vivaha_vedika.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package vivaha_vedika.dto;
+package projects.blue_whale.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

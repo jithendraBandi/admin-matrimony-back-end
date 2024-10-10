@@ -1,13 +1,13 @@
-package vivaha_vedika.controller;
+package projects.vivaha_vedika.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vivaha_vedika.dto.ApiResponse;
-import vivaha_vedika.entity.Profile;
-import vivaha_vedika.service.ProfileService;
+import projects.vivaha_vedika.dto.ApiResponse;
+import projects.vivaha_vedika.entity.Profile;
+import projects.vivaha_vedika.service.ProfileService;
 
 import java.util.List;
 @CrossOrigin

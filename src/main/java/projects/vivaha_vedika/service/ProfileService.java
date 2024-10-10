@@ -1,8 +1,8 @@
-package vivaha_vedika.service;
+package projects.vivaha_vedika.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import vivaha_vedika.entity.Profile;
+import projects.vivaha_vedika.entity.Profile;
 
 import java.util.List;
 

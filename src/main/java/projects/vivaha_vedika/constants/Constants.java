@@ -1,4 +1,4 @@
-package vivaha_vedika.constants;
+package projects.vivaha_vedika.constants;
 
 import org.springframework.context.annotation.Configuration;
 
