@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import projects.exceptions.CustomException;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse> saveCategory(@RequestBody Category category) {
+    public ResponseEntity<ApiResponse> saveCategory(@RequestBody Category category) throws CustomException {
         categoryService.saveCategory(category);
         return new ResponseEntity<>(new ApiResponse("Item Type Updated Successfully"), HttpStatus.CREATED);
     }

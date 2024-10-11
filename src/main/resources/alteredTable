@@ -1,0 +1,7 @@
+Category Table (name) unique constraint ------------------
+ALTER TABLE `vivaha_vedika_personal`.`category`
+  ADD  UNIQUE INDEX `unique` (`name`);
+
+Item Table (categoryId, name, company) unique constraint -----------
+ALTER TABLE `vivaha_vedika_personal`.`item`
+  ADD  UNIQUE INDEX `unique` (`category_id` , `company` , `name`);

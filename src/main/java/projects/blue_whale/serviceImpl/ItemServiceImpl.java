@@ -1,11 +1,13 @@
 package projects.blue_whale.serviceImpl;
 
 
+import org.springframework.dao.DataIntegrityViolationException;
 import projects.blue_whale.entity.Item;
 import projects.blue_whale.repository.ItemRepository;
 import projects.blue_whale.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import projects.exceptions.CustomException;
 
 import java.util.List;
 
@@ -15,8 +17,13 @@ public class ItemServiceImpl implements ItemService {
     private ItemRepository itemRepository;
 
     @Override
-    public void saveItem(Item item) {
-        itemRepository.save(item);
+    public void saveItem(Item item) throws CustomException {
+        try {
+            itemRepository.save(item);
+        }
+        catch(DataIntegrityViolationException e) {
+            throw new CustomException("Duplicate Item is not allowed");
+        }
     }
 
     @Override

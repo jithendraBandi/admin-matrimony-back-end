@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import projects.exceptions.CustomException;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class ItemController {
     private ItemService itemService;
 
     @PostMapping("/save")
-    public ResponseEntity<ApiResponse> saveItem(@RequestBody Item item) {
+    public ResponseEntity<ApiResponse> saveItem(@RequestBody Item item) throws CustomException {
         itemService.saveItem(item);
         return new ResponseEntity<>(new ApiResponse("Item Updated Successfully"), HttpStatus.CREATED);
     }
