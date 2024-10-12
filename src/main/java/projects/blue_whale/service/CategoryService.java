@@ -9,4 +9,6 @@ public interface CategoryService {
     void saveCategory(Category category) throws CustomException;
 
     List<Category> getAllCategories();
+
+    void deleteCategory(Long categoryId);
 }

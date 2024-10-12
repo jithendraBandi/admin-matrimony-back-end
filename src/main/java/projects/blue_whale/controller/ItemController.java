@@ -30,4 +30,10 @@ public class ItemController {
         List<Item> itemList = itemService.getAllItems();
         return new ResponseEntity<>(new ApiResponse(itemList), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{itemId}/delete")
+    public ResponseEntity<ApiResponse> deleteItem(@PathVariable Long itemId) {
+        itemService.deleteItem(itemId);
+        return new ResponseEntity<>(new ApiResponse("Item deleted successfully."), HttpStatus.OK);
+    }
 }

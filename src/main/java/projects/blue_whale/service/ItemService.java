@@ -9,4 +9,6 @@ public interface ItemService {
     void saveItem(Item item) throws CustomException;
 
     List<Item> getAllItems();
+
+    void deleteItem(Long itemId);
 }

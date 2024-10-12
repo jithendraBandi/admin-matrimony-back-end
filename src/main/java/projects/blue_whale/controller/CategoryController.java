@@ -30,4 +30,10 @@ public class CategoryController {
         List<Category> categoryList = categoryService.getAllCategories();
         return new ResponseEntity<>(new ApiResponse(categoryList), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{categoryId}/delete")
+    public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Long categoryId) {
+        categoryService.deleteCategory(categoryId);
+        return new ResponseEntity<>(new ApiResponse("Category deleted successfully."), HttpStatus.OK);
+    }
 }
