@@ -1,6 +1,7 @@
 package projects.blue_whale.serviceImpl;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import projects.blue_whale.constants.Constants;
 import projects.blue_whale.entity.Category;
 import projects.blue_whale.repository.CategoryRepository;
 import projects.blue_whale.service.CategoryService;
@@ -21,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
             categoryRepository.save(category);
         }
         catch(DataIntegrityViolationException e) {
-            throw new CustomException("Duplicate Category is not allowed");
+            throw new CustomException(Constants.DUPLICATE_ERROR);
         }
     }
 

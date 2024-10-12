@@ -2,6 +2,7 @@ package projects.blue_whale.serviceImpl;
 
 
 import org.springframework.dao.DataIntegrityViolationException;
+import projects.blue_whale.constants.Constants;
 import projects.blue_whale.entity.Item;
 import projects.blue_whale.repository.ItemRepository;
 import projects.blue_whale.service.ItemService;
@@ -22,7 +23,7 @@ public class ItemServiceImpl implements ItemService {
             itemRepository.save(item);
         }
         catch(DataIntegrityViolationException e) {
-            throw new CustomException("Duplicate Item is not allowed");
+            throw new CustomException(Constants.DUPLICATE_ERROR);
         }
     }
 

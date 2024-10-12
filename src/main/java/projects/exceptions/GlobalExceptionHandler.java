@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<CustomException> handleCustomException(CustomException ex) {
-//        CustomExceptionDTO errorResponse = new CustomExceptionDTO(ex.getMessage());
-        return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<CustomException> handleGlobalException(Exception ex) {
-        CustomException errorResponse = new CustomException( "An unexpected error occurred: " + ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponse> handleGlobalException(Exception ex) {
+        ErrorResponse errorResponse = new ErrorResponse( "Something went wrong, please try again later", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

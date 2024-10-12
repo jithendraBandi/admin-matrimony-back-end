@@ -46,6 +46,7 @@ public class Transaction {
     public static class TransactionItemDetails {
         private Long itemId;
         private String itemName;
+        private String categoryName;
         private Integer quantity;
         private Double cost;
     }
