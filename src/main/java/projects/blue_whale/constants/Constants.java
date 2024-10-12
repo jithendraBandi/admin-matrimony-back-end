@@ -10,4 +10,5 @@ public class Constants {
     public static final String BUY = "BUY";
     public static final String SELL = "SELL";
     public static final String DUPLICATE_ERROR = "Duplicate Entry not allowed";
+    public static final String INVALID_TRADE_TYPE = "Invalid Trade Type";
 }

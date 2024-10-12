@@ -22,7 +22,7 @@ public class CategoryController {
     @PostMapping("/save")
     public ResponseEntity<ApiResponse> saveCategory(@RequestBody Category category) throws CustomException {
         categoryService.saveCategory(category);
-        return new ResponseEntity<>(new ApiResponse("Item Type Updated Successfully"), HttpStatus.CREATED);
+        return new ResponseEntity<>(new ApiResponse("Category updated successfully"), HttpStatus.CREATED);
     }
 
     @GetMapping("/get")

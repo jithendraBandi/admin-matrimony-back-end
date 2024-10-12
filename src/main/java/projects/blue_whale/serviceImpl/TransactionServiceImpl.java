@@ -8,6 +8,7 @@ import projects.blue_whale.entity.Transaction;
 import projects.blue_whale.repository.ItemRepository;
 import projects.blue_whale.repository.TransactionRepository;
 import projects.blue_whale.service.TransactionService;
+import projects.exceptions.CustomException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
         if (transaction.getId() != null) {
             Optional<Transaction> optionalTransaction = transactionRepository.findById(transaction.getId());
             if (optionalTransaction.isEmpty()) {
-                throw new RuntimeException("Transaction not exist with given id: " + transaction.getId());
+                throw new CustomException("Transaction not exist with given id: " + transaction.getId());
             }
             Transaction existingTransaction = optionalTransaction.get();
             if (existingTransaction.getTradeType().equalsIgnoreCase(Constants.BUY) && transaction.getTradeType().equalsIgnoreCase(Constants.BUY)) {
@@ -45,7 +46,7 @@ public class TransactionServiceImpl implements TransactionService {
                 updateQuantity(itemDetails, itemsList, Constants.BUY);
             }
             else {
-                throw new RuntimeException("Invalid Trade Type");
+                throw new CustomException(Constants.INVALID_TRADE_TYPE);
             }
         }
         else {
@@ -56,7 +57,7 @@ public class TransactionServiceImpl implements TransactionService {
                 updateQuantity(transaction.getTransactionItemDetails(), itemsList, Constants.SELL);
             }
             else {
-                throw new RuntimeException("Invalid Trade Type");
+                throw new CustomException(Constants.INVALID_TRADE_TYPE);
             }
         }
 
@@ -95,7 +96,7 @@ public class TransactionServiceImpl implements TransactionService {
             });
         }
         else {
-            throw new RuntimeException("Invalid Trade Type");
+            throw new CustomException(Constants.INVALID_TRADE_TYPE);
         }
     }
 
@@ -109,5 +110,25 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transaction> transactionList = transactionRepository.findAll();
         Collections.reverse(transactionList);
         return transactionList;
+    }
+
+    @Override
+    public void deleteTransaction(Long transactionId) {
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(transactionId);
+        if (optionalTransaction.isEmpty()) {
+            throw new CustomException("Transaction not found with id: " + transactionId);
+        }
+        List<Item> itemsList = itemRepository.findAll();
+        Transaction transaction = optionalTransaction.get();
+        if (transaction.getTradeType().equalsIgnoreCase(Constants.BUY)) {
+            updateQuantity(transaction.getTransactionItemDetails(), itemsList, Constants.SELL);
+        }
+        else if (transaction.getTradeType().equalsIgnoreCase(Constants.SELL)) {
+            updateQuantity(transaction.getTransactionItemDetails(), itemsList, Constants.BUY);
+        }
+        else {
+            throw new CustomException(Constants.INVALID_TRADE_TYPE);
+        }
+        transactionRepository.delete(transaction);
     }
 }

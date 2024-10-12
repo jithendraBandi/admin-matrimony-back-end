@@ -28,5 +28,10 @@ public class TransactionController {
         List<Transaction> transactionList = transactionService.getAllTransactions();
         return new ResponseEntity<>(new ApiResponse(transactionList), HttpStatus.OK);
     }
+    @DeleteMapping("/{transactionId}/delete")
+    public ResponseEntity<ApiResponse> deleteTransaction(@PathVariable Long transactionId) {
+        transactionService.deleteTransaction(transactionId);
+        return new ResponseEntity<>(new ApiResponse("Transaction deleted successfully."), HttpStatus.OK);
+    }
 }
 
