@@ -34,31 +34,33 @@ public class TransactionServiceImpl implements TransactionService {
             if (existingTransaction.getTradeType().equalsIgnoreCase(Constants.BUY) && transaction.getTradeType().equalsIgnoreCase(Constants.BUY)) {
                 removeAndAddQuantity(existingTransaction.getTransactionItemDetails(), transaction.getTransactionItemDetails(), itemsList);
             }
-            else if (existingTransaction.getTradeType().equalsIgnoreCase(Constants.SELL) && transaction.getTradeType().equalsIgnoreCase(Constants.SELL)) {
+            else if (
+                    (
+                            existingTransaction.getTradeType().equalsIgnoreCase(Constants.SELL)
+                    || existingTransaction.getTradeType().equalsIgnoreCase(Constants.USAGE)
+
+                    ) && (
+                    transaction.getTradeType().equalsIgnoreCase(Constants.SELL) ||
+                            transaction.getTradeType().equalsIgnoreCase(Constants.USAGE)
+                    )
+
+            ) {
                 removeAndAddQuantity(transaction.getTransactionItemDetails(), existingTransaction.getTransactionItemDetails(), itemsList);
             }
-            else if (existingTransaction.getTradeType().equalsIgnoreCase(Constants.BUY) && transaction.getTradeType().equalsIgnoreCase(Constants.SELL)) {
+            else if (existingTransaction.getTradeType().equalsIgnoreCase(Constants.BUY) && (transaction.getTradeType().equalsIgnoreCase(Constants.SELL) || transaction.getTradeType().equalsIgnoreCase(Constants.USAGE))) {
                 List<Transaction.TransactionItemDetails> itemDetails = concatItemDetails(existingTransaction, transaction);
-                updateQuantity(itemDetails, itemsList, Constants.SELL);
+                updateQuantity(itemDetails, itemsList, transaction.getTradeType());
             }
-            else if (existingTransaction.getTradeType().equalsIgnoreCase(Constants.SELL) && transaction.getTradeType().equalsIgnoreCase(Constants.BUY)) {
+            else if ((existingTransaction.getTradeType().equalsIgnoreCase(Constants.SELL) || existingTransaction.getTradeType().equalsIgnoreCase(Constants.USAGE)) && transaction.getTradeType().equalsIgnoreCase(Constants.BUY)) {
                 List<Transaction.TransactionItemDetails> itemDetails = concatItemDetails(existingTransaction, transaction);
-                updateQuantity(itemDetails, itemsList, Constants.BUY);
+                updateQuantity(itemDetails, itemsList, transaction.getTradeType());
             }
             else {
                 throw new CustomException(Constants.INVALID_TRADE_TYPE);
             }
         }
         else {
-            if (transaction.getTradeType().equalsIgnoreCase(Constants.BUY)) {
-                updateQuantity(transaction.getTransactionItemDetails(), itemsList, Constants.BUY);
-            }
-            else if (transaction.getTradeType().equalsIgnoreCase(Constants.SELL)) {
-                updateQuantity(transaction.getTransactionItemDetails(), itemsList, Constants.SELL);
-            }
-            else {
-                throw new CustomException(Constants.INVALID_TRADE_TYPE);
-            }
+            updateQuantity(transaction.getTransactionItemDetails(), itemsList, transaction.getTradeType());
         }
 
         itemRepository.saveAll(itemsList);
@@ -88,10 +90,20 @@ public class TransactionServiceImpl implements TransactionService {
                 }
             });
         }
-        else if (tradeType.equalsIgnoreCase(Constants.SELL)) {
+        else if (tradeType.equalsIgnoreCase(Constants.SELL) || tradeType.equalsIgnoreCase(Constants.USAGE)) {
             itemsList.forEach(item -> {
                 if (itemDetailsIds.contains(item.getId())) {
-                    item.setQuantity(item.getQuantity() - itemDetailsIdQuantityMap.get(item.getId()));
+                    int updatedQuantity = item.getQuantity() - itemDetailsIdQuantityMap.get(item.getId());
+                    if (updatedQuantity < 0) {
+                        throw new CustomException(String.format(
+                                "%s - %s doesn't have required %d quantity. Only have %d.",
+                                item.getCategory().getName(),
+                                item.getName(),
+                                itemDetailsIdQuantityMap.get(item.getId()),
+                                item.getQuantity())
+                        );
+                    }
+                    item.setQuantity(updatedQuantity);
                 }
             });
         }
@@ -123,7 +135,7 @@ public class TransactionServiceImpl implements TransactionService {
         if (transaction.getTradeType().equalsIgnoreCase(Constants.BUY)) {
             updateQuantity(transaction.getTransactionItemDetails(), itemsList, Constants.SELL);
         }
-        else if (transaction.getTradeType().equalsIgnoreCase(Constants.SELL)) {
+        else if ((transaction.getTradeType().equalsIgnoreCase(Constants.SELL) || transaction.getTradeType().equalsIgnoreCase(Constants.USAGE))) {
             updateQuantity(transaction.getTransactionItemDetails(), itemsList, Constants.BUY);
         }
         else {
