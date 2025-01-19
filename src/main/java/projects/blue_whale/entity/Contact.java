@@ -9,15 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="MAINTENANCE")
-public class Maintenance {
+@Table(name="CONTACT")
+public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ID")
     private Long id;
-
-    @Column(name="TYPE")
-    private String type;
 
     @Column(name="NAME")
     private String name;
@@ -25,15 +22,9 @@ public class Maintenance {
     @Column(name="MOBILE_NUMBER")
     private String mobileNumber;
 
-    @Column(name="DATE")
-    private String date;
-
-    @Column(name="MAINTENANCE_DATE")
-    private String maintenanceDate;
-
     @Column(name="ADDRESS")
     private String address;
 
-    @Column(name="COMMENT")
-    private String comment;
+    @Column(name="NOTES")
+    private String notes;
 }

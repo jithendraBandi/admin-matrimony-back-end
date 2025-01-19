@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import projects.blue_whale.dto.ApiResponse;
 import projects.blue_whale.entity.Maintenance;
 import projects.blue_whale.service.MaintenanceService;
-import projects.exceptions.CustomException;
 
 import java.util.List;
 

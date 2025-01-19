@@ -5,3 +5,7 @@ ALTER TABLE `vivaha_vedika_personal`.`category`
 Item Table (categoryId, name, company) unique constraint -----------
 ALTER TABLE `vivaha_vedika_personal`.`item`
   ADD  UNIQUE INDEX `unique` (`category_id` , `company` , `name`);
+
+Maintenance Table (Comment) columnDefinition TEXT -------------------
+ALTER TABLE `vivaha_vedika_personal`.`maintenance`
+	CHANGE `comment` `comment` TEXT CHARSET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL;
