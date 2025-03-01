@@ -25,6 +25,9 @@ public class Item {
     @Column(name="PRICE")
     private Double price;
 
+    @Column(name="PURCHASE_PRICE")
+    private Double purchasePrice;
+
     @Column(name="COMPANY")
     private String company;
 
