@@ -83,10 +83,16 @@ public class TransactionServiceImpl implements TransactionService {
                         Transaction.TransactionItemDetails::getQuantity,
                         Integer::sum
                 ));
+        Map<Long, Transaction.TransactionItemDetails> itemDetailsMap = itemDetails.stream()
+                .collect(Collectors.toMap(
+                        Transaction.TransactionItemDetails::getItemId,
+                        details -> details
+                ));
         if (tradeType.equalsIgnoreCase(Constants.BUY)) {
             itemsList.forEach(item -> {
                 if (itemDetailsIds.contains(item.getId())) {
                     item.setQuantity(item.getQuantity() + itemDetailsIdQuantityMap.get(item.getId()));
+                    item.setPurchasePrice(itemDetailsMap.get(item.getId()).getCost());
                 }
             });
         }
