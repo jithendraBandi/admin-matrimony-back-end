@@ -2,6 +2,7 @@ package projects.blue_whale.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import projects.blue_whale.constants.Constants;
 import projects.blue_whale.entity.Item;
 import projects.blue_whale.entity.Transaction;
@@ -23,6 +24,7 @@ public class TransactionServiceImpl implements TransactionService {
     private ItemRepository itemRepository;
 
     @Override
+    @Transactional
     public void saveTransaction(Transaction transaction) {
         List<Item> itemsList = itemRepository.findAll();
         if (transaction.getId() != null) {
@@ -119,8 +121,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     private void removeAndAddQuantity(List<Transaction.TransactionItemDetails> removeTransactionItemDetails, List<Transaction.TransactionItemDetails> addTransactionItemDetails, List<Item> itemsList) {
-        updateQuantity(removeTransactionItemDetails, itemsList, Constants.SELL);
         updateQuantity(addTransactionItemDetails, itemsList, Constants.BUY);
+        updateQuantity(removeTransactionItemDetails, itemsList, Constants.SELL);
     }
 
     @Override
