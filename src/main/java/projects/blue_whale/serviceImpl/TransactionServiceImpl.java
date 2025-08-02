@@ -94,7 +94,7 @@ public class TransactionServiceImpl implements TransactionService {
             itemsList.forEach(item -> {
                 if (itemDetailsIds.contains(item.getId())) {
                     item.setQuantity(item.getQuantity() + itemDetailsIdQuantityMap.get(item.getId()));
-                    item.setPurchasePrice(itemDetailsMap.get(item.getId()).getCost());
+//                    item.setPurchasePrice(itemDetailsMap.get(item.getId()).getCost());
                 }
             });
         }
