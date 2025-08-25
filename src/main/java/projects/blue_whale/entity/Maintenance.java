@@ -34,6 +34,6 @@ public class Maintenance {
     @Column(name="ADDRESS")
     private String address;
 
-    @Column(name="COMMENT")
+    @Column(name="COMMENT", columnDefinition = "TEXT")
     private String comment;
 }

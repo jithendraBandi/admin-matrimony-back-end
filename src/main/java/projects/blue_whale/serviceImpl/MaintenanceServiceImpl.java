@@ -9,6 +9,7 @@ import projects.blue_whale.repository.MaintenanceRepository;
 import projects.blue_whale.service.MaintenanceService;
 import projects.exceptions.CustomException;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -23,7 +24,9 @@ public class MaintenanceServiceImpl implements MaintenanceService {
 
     @Override
     public List<Maintenance> getAllMaintenance() {
-        return maintenanceRepository.findAll();
+        List<Maintenance> maintenanceList = maintenanceRepository.findAll();
+        Collections.reverse(maintenanceList);
+        return maintenanceList;
     }
 
     @Override
